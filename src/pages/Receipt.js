@@ -25,7 +25,6 @@ const Receipt = () => {
     <MainDiv>
       <Header />
       <ContainerDiv>
-        <BoxButton onClick={routeChange}>BACK TO HOME</BoxButton>
         <Box>
           <RcpTxt>RECEIPT</RcpTxt>
           <ItmTxt>Dish: {finishOrder[0]}</ItmTxt>
@@ -34,6 +33,7 @@ const Receipt = () => {
           <ItmTxt>Date: {finishOrder[3]}</ItmTxt>
           <ItmTxt>Email: {finishOrder[4]}</ItmTxt>
         </Box>
+        <BoxButton onClick={routeChange}>BACK TO HOME</BoxButton>
       </ContainerDiv>
     </MainDiv>
   )
