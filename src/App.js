@@ -22,7 +22,7 @@ function App() {
         />
         <Route
           index
-          path='/dateGuests'
+          path='/dateguests'
           element={<DateGuests />}
         />
         <Route

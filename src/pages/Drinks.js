@@ -2,9 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Header from './Header'
-
-let drinkArray = []
-let itemID = 0
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import axios from 'axios'
 
 const Drinks = () => {
   const navigate = useNavigate()
@@ -17,22 +20,18 @@ const Drinks = () => {
   const [drink, setDrink] = useState([])
 
   const pickDrink = async () => {
-    const result = await fetch('https://api.punkapi.com/v2/beers')
-    const body = await result.json()
-    setSelected(body)
+    const result = await axios.get('https://api.punkapi.com/v2/beers')
+    setDrink(result.data)
   }
 
   const [selected, setSelected] = useState([])
 
-  const handleChange = (cost, name, setID) => {
-    drinkArray.push({ n: name, c: cost, id: itemID })
-    itemID++
-    if (drink[setID] === undefined) {
-      setDrink({
-        ...drink,
-        [setID]: !drink[setID],
-      })
-    }
+  const handleChange = (event) => {
+    const { checked, value } = event.currentTarget
+
+    setSelected((prev) =>
+      checked ? [...prev, value] : prev.filter((val) => val !== value)
+    )
   }
 
   const reservation = () => {
@@ -46,11 +45,7 @@ const Drinks = () => {
     routeChange()
   }
 
-  let drinkValue = 450
-  let drinkCost = Array.from({ length: 30 }, () => (drinkValue += 50))
-
   useEffect(() => {
-    drinkArray = []
     pickDrink()
   }, [])
 
@@ -59,36 +54,58 @@ const Drinks = () => {
       <Header />
       <ContainerDiv>
         <BigBox>
-          {selected ? (
-            selected.map((item) => (
-              <CardDiv
-                key={item.id}
-                style={{ backgroundImage: `url(${item.image_url})` }}
-                onClick={() =>
-                  handleChange(drinkCost[item.id - 1], item.name, item.id)
-                }
-              >
-                <p>{drinkCost[item.id - 1]}kr</p>
-                {drink[item.id] && (
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                    className='w-5 h-5'
+          <Grid
+            container
+            spacing={2}
+          >
+            <Grid
+              item
+              xs={12}
+            >
+              <Box sx={{ height: '590px', overflow: 'scroll', width: '600px' }}>
+                {drink.map((drink) => (
+                  <Paper
+                    sx={{
+                      maxWidth: 400,
+                      my: 1,
+                      mx: 'auto',
+                      p: 2,
+                      backgroundColor: '#3e6053',
+                    }}
+                    key={drink.id}
                   >
-                    <CheckMark
-                      fillRule='evenodd'
-                      d='M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z'
-                      clipRule='evenodd'
-                    />
-                  </svg>
-                )}
-                <DrinkNames>{item.name}</DrinkNames>
-              </CardDiv>
-            ))
-          ) : (
-            <p>Something went wrong</p>
-          )}
+                    <Grid
+                      container
+                      wrap='nowrap'
+                      spacing={2}
+                    >
+                      <Grid item>
+                        <Avatar>
+                          <Image src={drink.image_url} />
+                        </Avatar>
+                      </Grid>
+                      <Grid
+                        item
+                        xs
+                        zeroMinWidth
+                      >
+                        <Typography noWrap>
+                          <label htmlFor={drink.id}>{drink.name} 650kr.</label>
+                          <input
+                            checked={selected.some((val) => val === drink.name)}
+                            onChange={handleChange}
+                            value={drink.name}
+                            id={drink.id}
+                            type='checkbox'
+                          />
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Paper>
+                ))}
+              </Box>
+            </Grid>
+          </Grid>
         </BigBox>
         <SmallBox>
           <LargeTxt>Click to finish ordering</LargeTxt>
@@ -126,7 +143,7 @@ const BoxButton = styled.button`
   cursor: pointer;
 `
 
-const Box = styled.div`
+const LilBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,7 +155,7 @@ const Box = styled.div`
   background-color: #3e5f54;
 `
 
-const BigBox = styled(Box)`
+const BigBox = styled(LilBox)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: fit-content;
@@ -160,30 +177,6 @@ const LargeTxt = styled.h1`
   font-size: 40px;
 `
 
-const CardDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 250px;
-  width: 250px;
-  margin: 10px;
-  border: #d06858 solid 4px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  color: #e3e996;
-`
-
-const DrinkNames = styled.p`
-  margin: 0px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #e3e996;
-`
-
-const CheckMark = styled.path`
-  height: 100px;
-  width: 100px;
-  color: #e3e996;
+const Image = styled.img`
+  height: 50px;
 `

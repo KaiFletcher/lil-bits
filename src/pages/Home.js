@@ -25,7 +25,7 @@ function Home() {
     const result = JSON.parse(localStorage.getItem('order'))
     if (result[4] === email) {
       const path = 'Receipt/'
-      navigate.push(path)
+      navigate(path)
     }
   }
 

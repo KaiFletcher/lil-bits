@@ -24,7 +24,7 @@ const DateGuests = () => {
   }
 
   const [state, setState] = useState(data)
-  const { email, guests } = state
+  const { email } = state
   const [button, setButton] = useState(true)
 
   const handleChange = (event) => {
@@ -57,7 +57,7 @@ const DateGuests = () => {
     if (!order) {
       order = []
     }
-    order.push(guests)
+    order.push(count)
     order.push(startDate.toGMTString())
     order.push(email)
     localStorage.setItem('order', JSON.stringify(order))

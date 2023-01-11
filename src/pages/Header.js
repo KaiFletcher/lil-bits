@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 function Header() {
   let location = useLocation()

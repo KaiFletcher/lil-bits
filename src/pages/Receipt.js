@@ -15,11 +15,17 @@ const Receipt = () => {
   const getReceipt = async () => {
     const result = await JSON.parse(localStorage.getItem('order'))
     setFinishOrder(result)
+    console.log(result)
   }
 
   useEffect(() => {
     getReceipt()
   }, [])
+
+  let drinkcost = 650
+  let mealcost = 2500
+  let orderstotal = mealcost + drinkcost
+  let totalcost = orderstotal * finishOrder[2]
 
   return (
     <MainDiv>
@@ -32,6 +38,7 @@ const Receipt = () => {
           <ItmTxt>Guests: {finishOrder[2]}</ItmTxt>
           <ItmTxt>Date: {finishOrder[3]}</ItmTxt>
           <ItmTxt>Email: {finishOrder[4]}</ItmTxt>
+          <ItmTxt>Total cost: {totalcost} kr.</ItmTxt>
         </Box>
         <BoxButton onClick={routeChange}>BACK TO HOME</BoxButton>
       </ContainerDiv>
@@ -74,12 +81,13 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  margin-top: 40px;
+  margin-top: 20px;
   min-height: 600px;
   width: 400px;
   border: #d06858 solid;
   border-radius: 5px;
   background-color: #3e5f54;
+  margin-bottom: 35px;
 `
 
 const RcpTxt = styled.p`
