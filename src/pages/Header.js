@@ -13,10 +13,10 @@ function Header() {
     <HeaderMenu>
       <Logo src='http://ih1.redbubble.net/image.181146356.8650/sticker,375x360.u1.png' />
       <Head style={style['/']}>Home</Head>
-      <Head style={style['/dishes']}>Dish</Head>
-      <Head style={style['/drinks']}>Drinks</Head>
-      <Head style={style['/dateguests']}>Date&Guests</Head>
-      <Head style={style['/receipt']}>Receipt</Head>
+      <Head style={style['/Dishes']}>Dishes</Head>
+      <Head style={style['/Drinks']}>Drinks</Head>
+      <Head style={style['/Date&Guests']}>Date&Guests</Head>
+      <Head style={style['/Receipt']}>Receipt</Head>
     </HeaderMenu>
   )
 }

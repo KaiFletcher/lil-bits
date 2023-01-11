@@ -13,7 +13,7 @@ const Drinks = () => {
   const navigate = useNavigate()
 
   const routeChange = () => {
-    const path = '/DateGuests'
+    const path = '/Date&Guests'
     navigate(path)
   }
 

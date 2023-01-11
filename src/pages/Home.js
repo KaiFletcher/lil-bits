@@ -12,7 +12,7 @@ function Home() {
   const navigate = useNavigate()
 
   const routeChange = () => {
-    const path = 'Dishes/'
+    const path = '/Dishes'
     navigate(path)
     localStorage.clear()
   }
